@@ -10,7 +10,7 @@ public class PlayerController : MonoBehaviour
     public float acceleration = 10;
     public float distance = 0;
     public float jumpVelocity = 20;
-    public float maxVelocity = 100;
+    public float maxXVelocity = 100;
     public float groundHeight = -5;
     public bool isGrounded = false;
 
@@ -78,13 +78,13 @@ public class PlayerController : MonoBehaviour
 
         if (isGrounded)
         {
-            float velocityRatio = velocity.x / maxVelocity;
+            float velocityRatio = velocity.x / maxXVelocity; 
             acceleration = maxAcceleration * (1-velocityRatio);
 
             velocity.x += acceleration * Time.fixedDeltaTime;
-            if(velocity.x >= maxVelocity)
+            if(velocity.x >= maxXVelocity) 
             {
-                velocity.x = maxVelocity;
+                velocity.x = maxXVelocity; 
             }
         }
 
