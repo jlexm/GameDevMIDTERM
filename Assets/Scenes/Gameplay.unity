@@ -388,8 +388,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4278190080
-  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
+    rgba: 4294283104
+  m_fontColor: {r: 0.3764706, g: 0.56078434, b: 0.9607843, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -819,7 +819,7 @@ MonoBehaviour:
   obstaclePrefabs:
   - {fileID: 7655358970209185846, guid: c7727aaf8bdc6214a9109e228a1d2394, type: 3}
   obstacleSpawnTime: 5
-  obstacleSpeed: 3
+  obstacleSpeed: 10
 --- !u!4 &1462096716
 Transform:
   m_ObjectHideFlags: 0
