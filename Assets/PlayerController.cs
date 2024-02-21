@@ -17,18 +17,27 @@ public class PlayerController : MonoBehaviour
     public bool isHoldingJump = false;
     public float maxHoldJumpTime = 0.4f;
     public float holdJumpTimer = 0.0f;
+    [SerializeField] private float playerSlowdownFactor = 0.5f;
 
     public float jumpGroundThreshold = 1;
-    void Start()
+
+    private void OnTriggerEnter2D(Collider2D other)
     {
-        
+        if (other.CompareTag("Obstacle"))
+        {
+            SlowDownPlayer();
+        }
     }
 
+    public void SlowDownPlayer()
+    {
+        velocity.x *= playerSlowdownFactor;
+    }
 
     void Update()
     {
         Vector2 pos = transform.position;
-        float groundDistance = Mathf.Abs(pos.y = groundHeight);
+        float groundDistance = Mathf.Abs(pos.y - groundHeight);
         
         if (isGrounded || groundDistance <= jumpGroundThreshold)
         {
@@ -65,7 +74,6 @@ public class PlayerController : MonoBehaviour
             {
                 velocity.y += gravity * Time.fixedDeltaTime;
             }
-            
 
             if (pos.y <= groundHeight)
             {
@@ -79,15 +87,14 @@ public class PlayerController : MonoBehaviour
         if (isGrounded)
         {
             float velocityRatio = velocity.x / maxXVelocity; 
-            acceleration = maxAcceleration * (1-velocityRatio);
+            acceleration = maxAcceleration * (1 - velocityRatio);
 
             velocity.x += acceleration * Time.fixedDeltaTime;
-            if(velocity.x >= maxXVelocity) 
+            if (velocity.x >= maxXVelocity) 
             {
                 velocity.x = maxXVelocity; 
             }
         }
-
 
         transform.position = pos;
     }
