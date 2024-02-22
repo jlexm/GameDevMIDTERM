@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Obstacle : MonoBehaviour
+public class Enemy : MonoBehaviour
 {
     private bool canDestroyOffScreen = false;
 
@@ -10,15 +10,9 @@ public class Obstacle : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            // Slow down the player directly from PlayerController script
-            PlayerController playerController = other.GetComponent<PlayerController>();
-            if (playerController != null)
-            {
-                playerController.SlowDownPlayer();
-            }
-
-            // Destroy the obstacle GameObject
-            Destroy(transform.parent.gameObject); // Destroy the parent GameObject
+            Destroy(other.gameObject);
+            GameController.isGameOver = true;
+            
         }
     }
 

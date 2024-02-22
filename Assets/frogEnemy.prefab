@@ -172,9 +172,9 @@ GameObject:
   m_Component:
   - component: {fileID: 910472826748776320}
   - component: {fileID: 3108581645549866251}
-  m_Layer: 6
+  m_Layer: 8
   m_Name: frogEnemy
-  m_TagString: Obstacle
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
