@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class GameController : MonoBehaviour
 {
     public static bool isGameOver;
+    public AudioSource musicSource;
 
     public GameObject gameOverScreen;
 
@@ -17,6 +18,7 @@ public class GameController : MonoBehaviour
     void Start()
     {
         Time.timeScale = 1;
+        musicSource.volume = 0.5f;
     }
 
     // Update is called once per frame
@@ -26,6 +28,7 @@ public class GameController : MonoBehaviour
         {
             gameOverScreen.SetActive(true);
             Time.timeScale = 0;
+            musicSource.volume = 0f;
         }
     }
 
