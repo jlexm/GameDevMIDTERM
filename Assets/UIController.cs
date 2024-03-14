@@ -1,30 +1,27 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-
 
 public class UIController : MonoBehaviour
 {
     PlayerController player;
     TextMeshProUGUI distanceText;
+    TextMeshProUGUI chargeText;
 
     private void Awake()
     {
         player = GameObject.Find("Player").GetComponent<PlayerController>();
         distanceText = GameObject.Find("DistanceText").GetComponent<TextMeshProUGUI>();
- 
+        chargeText = GameObject.Find("ChargeText").GetComponent<TextMeshProUGUI>();
     }
 
-    // Start is called before the first frame update
     void Start()
     {
         
     }
 
-    // Update is called once per frame
     void Update()
     {
         distanceText.text = Mathf.FloorToInt(player.distance) + " m";
+        chargeText.text = "Dash Charges: " + player.currentDashCharges;
     }
 }

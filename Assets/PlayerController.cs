@@ -18,19 +18,35 @@ public class PlayerController : MonoBehaviour
     public float maxHoldJumpTime = 0.4f;
     public float holdJumpTimer = 0.0f;
 
+    public int maxDashCharges = 3;
+    public int currentDashCharges;
+    public float dashSpeed = 50f;
+    public float dashDuration = 0.2f;
+    public float dashCooldown = 2f;
+    public bool isDashing = false;
+    private bool canDash = true;
 
     public float jumpGroundThreshold = 1;
+    private Animator anim;
+    private Spawner spawner;
+
+    private void Start()
+    {
+        currentDashCharges = maxDashCharges;
+        anim = GetComponent<Animator>();
+        spawner = FindObjectOfType<Spawner>();
+    }
 
     void Update()
     {
-        
         Vector2 pos = transform.position;
         float groundDistance = Mathf.Abs(pos.y - groundHeight);
-        
+
         if (isGrounded || groundDistance <= jumpGroundThreshold)
         {
             if (Input.GetKeyDown(KeyCode.Space))
             {
+                anim.SetBool("isJumping", true);
                 isGrounded = false;
                 velocity.y = jumpVelocity;
                 isHoldingJump = true;
@@ -40,7 +56,18 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyUp(KeyCode.Space))
         {
             isHoldingJump = false;
-        }       
+        }
+
+        if (Input.GetKeyDown(KeyCode.LeftShift) && canDash && currentDashCharges > 0)
+        {
+            StartCoroutine(Dash());
+            currentDashCharges--;
+        }
+
+        if (Mathf.FloorToInt(distance) % 200 == 0 && Mathf.FloorToInt(distance) > 0)
+        {
+            spawner.UpdateObstacleSpawnTime(distance);
+        }
     }
 
     private void FixedUpdate()
@@ -51,7 +78,7 @@ public class PlayerController : MonoBehaviour
             if (isHoldingJump)
             {
                 holdJumpTimer += Time.fixedDeltaTime;
-                if(holdJumpTimer >= maxHoldJumpTime)
+                if (holdJumpTimer >= maxHoldJumpTime)
                 {
                     isHoldingJump = false;
                 }
@@ -68,24 +95,55 @@ public class PlayerController : MonoBehaviour
                 pos.y = groundHeight;
                 isGrounded = true;
             }
-
-            GameData.distanceTraveled = Mathf.FloorToInt(distance);
         }
 
         distance += velocity.x * Time.fixedDeltaTime;
+        if (distance % 10 == 0)
+        {
+            maxXVelocity += 10;
+        }
 
         if (isGrounded)
         {
-            float velocityRatio = velocity.x / maxXVelocity; 
+            anim.SetBool("isJumping", false);
+            float velocityRatio = velocity.x / maxXVelocity;
             acceleration = maxAcceleration * (1 - velocityRatio);
 
             velocity.x += acceleration * Time.fixedDeltaTime;
-            if (velocity.x >= maxXVelocity) 
+            if (velocity.x >= maxXVelocity)
             {
-                velocity.x = maxXVelocity; 
+                velocity.x = maxXVelocity;
             }
         }
 
         transform.position = pos;
+    }
+
+    IEnumerator Dash()
+    {
+        isDashing = true;
+        canDash = false;
+        Vector2 savedVelocity = velocity;
+        velocity.x = dashSpeed;
+        anim.SetBool("isDashing", true);
+        yield return new WaitForSeconds(dashDuration);
+        anim.SetBool("isDashing", false);   
+        velocity = savedVelocity;
+        isDashing = false;
+        yield return new WaitForSeconds(dashCooldown);
+        canDash = true;
+    }
+
+    public void RefillDashCharges()
+    {
+        if (currentDashCharges < maxDashCharges)
+        {
+            currentDashCharges++;
+        }
+    }
+
+    public Vector2 GetVelocity()
+    {
+        return velocity;
     }
 }
