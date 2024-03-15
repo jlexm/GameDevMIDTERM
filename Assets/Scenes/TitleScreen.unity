@@ -1445,14 +1445,17 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'You have maximum of 3 dashes.
+  m_text: 'You have maximum of 3 dashes
 
-    Hit bats for a dash recharge.
+    Space to Jump
 
-    Use
-    dash to destroy trajectory.
+    Hit(Left Click) 
+    bats for a dash recharge
 
-    The longer you survive the longer you traverse.'
+    Use dash(Shift) to destroy trajectory
+
+    The
+    longer you survive the longer you traverse'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: f0335b609809a6c44a30e1b1a67258ef, type: 2}
   m_sharedMaterial: {fileID: 9068657083159715899, guid: f0335b609809a6c44a30e1b1a67258ef, type: 2}
@@ -1493,7 +1496,7 @@ MonoBehaviour:
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
-  m_paragraphSpacing: 0
+  m_paragraphSpacing: 20
   m_charWidthMaxAdj: 0
   m_enableWordWrapping: 1
   m_wordWrappingRatios: 0.4
